@@ -1,3 +1,4 @@
+import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
@@ -15,6 +16,7 @@ export class MemberEditComponent implements OnInit {
   @ViewChild("editForm", { static: false }) editForm: NgForm;
 
   user: User;
+  photoUrl: string;
   // this to prevent user from closing the browser
   @HostListener("window:beforeunload", ["$event"])
   unloadNotification($event: any) {
@@ -33,6 +35,9 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.user = data["user"];
     });
+    this.authService.currentPhotoUrl.subscribe(
+      (photoUrl) => (this.photoUrl = photoUrl)
+    );
   }
   updateUser() {
     this.userService
@@ -46,5 +51,8 @@ export class MemberEditComponent implements OnInit {
           this.alertify.error(error);
         }
       );
+  }
+  updateMainPhoto(photoUrl) {
+    this.user.photoUrl = photoUrl;
   }
 }

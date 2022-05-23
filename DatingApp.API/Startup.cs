@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using DatingApp.API.Helpers.Extensions;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using DatingApp.API.Helpers;
 
 namespace DatingApp.API
 {
@@ -43,6 +44,7 @@ namespace DatingApp.API
             });
             services.AddCors();
 
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();
 
             services.AddTransient<Seed>();
